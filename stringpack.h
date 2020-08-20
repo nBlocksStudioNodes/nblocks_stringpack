@@ -10,7 +10,7 @@ extern char _stringpack_strbuf[256];
 class nBlock_StringPack: public nBlockSimpleNode<1> {
 public:
     nBlock_StringPack(const char * formatString);
-    void triggerInput(uint32_t inputNumber, uint32_t value);
+    void triggerInput(nBlocks_Message message);
     void endFrame(void);
 private:
     fifo internal_fifo;

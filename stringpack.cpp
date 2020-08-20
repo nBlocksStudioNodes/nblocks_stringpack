@@ -6,11 +6,20 @@ nBlock_StringPack::nBlock_StringPack(const char * formatString) {
     _format = formatString; // Let's keep a pointer to this constant string
 }
 
-void nBlock_StringPack::triggerInput(uint32_t inputNumber, uint32_t value) { // inputNumber is ignored
+void nBlock_StringPack::triggerInput(nBlocks_Message message) { // inputNumber is ignored
     int i, f;
 
     // Insert the value into the format string, and save it into the stringpack buffer
-    sprintf(_stringpack_strbuf, _format, value);
+
+	switch (message.dataType) {
+		case OUTPUT_TYPE_INT:
+			sprintf(_stringpack_strbuf, _format, message.intValue);
+			break;
+		case OUTPUT_TYPE_FLOAT:
+			sprintf(_stringpack_strbuf, _format, message.floatValue);
+			break;
+	}
+
 
     // Fill free slots in fifo with data from this string (discard the remaining)
     f = internal_fifo.free();
